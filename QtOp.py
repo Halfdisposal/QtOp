@@ -41,7 +41,6 @@ class Ket(QVecs):
         self.data = arr.reshape(-1, 1)
 
     def dagger(self):
-        """Return the conjugate transpose (Bra)."""
         return Bra(self.data.conjugate().T)
 
     
@@ -63,7 +62,6 @@ class Bra(QVecs):
         self.data = arr.reshape(1, -1)
 
     def dagger(self):
-        """Return the conjugate transpose (Ket)."""
         return Ket(self.data.conjugate().T)
     
 
@@ -93,7 +91,6 @@ class QOp:
         return Op(self.data - x.data)
     
     def __matmul__(self, x):
-        """Quantum style multiplication using @"""
         if isinstance(x, Ket):
             return Ket(self.data @ x.data)
         elif isinstance(x, Bra):
@@ -104,7 +101,6 @@ class QOp:
             raise TypeError("Unsupported @ operation")
     
     def __mul__(self, x):
-        """Scalar multiplication"""
         if isinstance(x, (int, float, complex)):
             return Op(self.data * x)
         raise TypeError("Use @ for operator application, * is scalar only.")
@@ -133,4 +129,5 @@ def commute(A: Op, B: Op):
 
 def commutator(A: Op, B: Op):
     return A@B - B@A
+
 
